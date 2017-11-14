@@ -2,12 +2,12 @@
 Intro to Python Lab 1, Task 3
 
 Complete each task in the file for that task. Submit the whole folder
-as a zip file or GitHub repo. 
+as a zip file or GitHub repo.
 Full submission instructions are available on the Lab Preparation page.
 """
 
 """
-Read file into texts and calls. 
+Read file into texts and calls.
 It's ok if you don't understand how to read files
 You will learn more about reading files in future lesson
 """
@@ -23,13 +23,13 @@ with open('calls.csv', 'r') as f:
 
 """
 TASK 3:
-(080) is the area code for fixed line telephones in Bangalore. 
-Fixed line numbers include parentheses, so Bangalore numbers 
+(080) is the area code for fixed line telephones in Bangalore.
+Fixed line numbers include parentheses, so Bangalore numbers
 have the form (080)xxxxxxx.)
 
 Part A: Find all of the area codes and mobile prefixes called by people
-in Bangalore. 
- - Fixed lines start with an area code enclosed in brackets. The area 
+in Bangalore.
+ - Fixed lines start with an area code enclosed in brackets. The area
    codes vary in length but always begin with 0.
  - Mobile numbers have no parentheses, but have a space in the middle
    of the number to help readability. The prefix of a mobile number
@@ -52,3 +52,33 @@ Print the answer as a part of a message::
 to other fixed lines in Bangalore."
 The percentage should have 2 decimal digits
 """
+def find_fixedline(calls,area_code):
+    amount_of_fixedlines = []
+    for call in calls:
+        if area_code in call[0] and not(call[0] in amount_of_fixedlines):
+            amount_of_fixedlines.append(call[0])
+    return '\n'.join(sorted(amount_of_fixedlines))
+# print(find_fixedline(calls,'(080)'))
+print("The numbers called by people in Bangalore have codes:\n{}".format(find_fixedline(calls,'(080)')))
+
+def find_same_fixedline(calls,area_code):
+    # amount_of_same_fixedlines = []
+    num_of_same_fixedlines = 0
+    for call in calls:
+        if area_code in call[0] and area_code in call[1]:
+            # amount_of_same_fixedlines.append(call[0])
+            # print(len(amount_of_same_fixedlines))
+            num_of_same_fixedlines += 1
+            # print(num_of_same_fixedlines)
+    return num_of_same_fixedlines
+
+# print(find_same_fixedline(calls,'(080)'))
+
+def perc_of_same_fixedline(calls,area_code):
+    num_of_same_fixedlines = find_same_fixedline(calls,'(080)')
+    num_of_calls = len(calls)
+    perc = float(num_of_same_fixedlines/num_of_calls)
+    perc = round(perc,2)
+    return perc
+# print(perc_of_same_fixedline(calls,'(080)'))
+print("{} percent of calls from fixed lines in Bangalore are calls to other fixed lines in Bangalore.".format(perc_of_same_fixedline(calls,'(080)')))
