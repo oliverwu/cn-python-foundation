@@ -74,7 +74,7 @@ def find_fixedline(calls,area_code):
     # m = re.match(".*\((.*)\).*",amount_of_fixedlines[2])
     # print(amount_of_fixedlines)
     # return m.group(1)
-    # return '\n'.join(sorted(amount_of_fixedlines))
+
 print(find_fixedline(calls,'(080)'))
 print("The numbers called by people in Bangalore have codes:\n{}".format(find_fixedline(calls,'(080)')))
 
