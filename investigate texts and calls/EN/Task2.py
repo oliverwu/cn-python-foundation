@@ -42,7 +42,7 @@ def telnum_times(calls):
             telnum_times_dict[call[0]] = int(call[3])
         elif call[0] in telnum_times_dict:
             telnum_times_dict[call[0]] += int(call[3])
-        elif call[1] not in telnum_times_dict:
+        if call[1] not in telnum_times_dict:
             telnum_times_dict[call[1]] = int(call[3])
         elif call[1] in telnum_times_dict:
             telnum_times_dict[call[1]] += int(call[3])
