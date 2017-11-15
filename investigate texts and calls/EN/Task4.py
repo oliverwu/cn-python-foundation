@@ -50,9 +50,12 @@ def find_possible_telemarketers(calls,texts):
     for text in texts:
         if text[0] in texts:
             telenum_pool.remove(text[0])
-        elif text[1] in texts:
+        if text[1] in texts:
             telenum_pool.remove(text[1])
     return '\n'.join(sorted(telenum_pool))
+"""
+modified by the mentor's advice
+"""
 
 possible_telemarkets_list = find_possible_telemarketers(calls,texts)
 print("These numbers could be telemarketers:\n{}".format(possible_telemarkets_list))
