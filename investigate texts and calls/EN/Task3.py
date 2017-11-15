@@ -53,12 +53,29 @@ to other fixed lines in Bangalore."
 The percentage should have 2 decimal digits
 """
 def find_fixedline(calls,area_code):
+    import re
     amount_of_fixedlines = []
+    fixedlines = []
     for call in calls:
-        if area_code in call[0] and not(call[0] in amount_of_fixedlines):
-            amount_of_fixedlines.append(call[0])
-    return '\n'.join(sorted(amount_of_fixedlines))
-# print(find_fixedline(calls,'(080)'))
+        if area_code in call[0] and not(call[1] in amount_of_fixedlines):
+            amount_of_fixedlines.append(call[1])
+    for fixedline in amount_of_fixedlines:
+        if fixedline[0] == "(" and not ((re.match(".*\((.*)\).*",fixedline)).group(1) in fixedlines):
+            fixedlines.append((re.match(".*\((.*)\).*",fixedline)).group(1))
+        if fixedline[0] == "7" and not (fixedline[0:3] in fixedlines):
+            fixedlines.append(fixedline[0:3])
+        if fixedline[0] == "8" and not (fixedline[0:3] in fixedlines):
+            fixedlines.append(fixedline[0:3])
+        if fixedline[0] == "9" and not (fixedline[0:3] in fixedlines):
+            fixedlines.append(fixedline[0:3])
+        if fixedline[0:2] == "140" and not (fixedline[0:2] in fixedlines):
+            fixedlines.append(fixedline[0:2])
+    return '\n'.join(sorted(fixedlines))
+    # m = re.match(".*\((.*)\).*",amount_of_fixedlines[2])
+    # print(amount_of_fixedlines)
+    # return m.group(1)
+    # return '\n'.join(sorted(amount_of_fixedlines))
+print(find_fixedline(calls,'(080)'))
 print("The numbers called by people in Bangalore have codes:\n{}".format(find_fixedline(calls,'(080)')))
 
 def find_same_fixedline(calls,area_code):
