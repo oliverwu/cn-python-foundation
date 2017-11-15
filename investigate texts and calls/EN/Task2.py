@@ -44,6 +44,9 @@ def telnum_times(calls):
             telnum_times_dict[call[0]] += int(call[3])
         if call[1] not in telnum_times_dict:
             telnum_times_dict[call[1]] = int(call[3])
+"""
+   modified by the mentor'advice
+"""
         elif call[1] in telnum_times_dict:
             telnum_times_dict[call[1]] += int(call[3])
     return telnum_times_dict
