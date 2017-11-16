@@ -48,9 +48,9 @@ def find_possible_telemarketers(calls,texts):
         if call[1] in telenum_pool:
             telenum_pool.remove(call[1])
     for text in texts:
-        if text[0] in texts:
+        if text[0] in telenum_pool:
             telenum_pool.remove(text[0])
-        if text[1] in texts:
+        if text[1] in telenum_pool:
             telenum_pool.remove(text[1])
     return '\n'.join(sorted(telenum_pool))
 """
