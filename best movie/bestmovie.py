@@ -97,27 +97,27 @@ def getLocations(category):
 # print(getLocations("剧情"))
 
 # locations = getLocations("剧情")
-my_favorite_categories = ["剧情","科幻","动作"]
+my_favorite_categories = ["科幻","动作","青春"]
 num_movies = 0
 
 
-def getMoviesDetail(category, location):
-	url = getMovieUrl(category, location)
-	html = expanddouban.getHtml(url, True)
-	soup = bs4.BeautifulSoup(html, "html.parser")
-	content_div = soup.find("div",class_="list-wp")
-	for element in content_div.find_all("a", recursive=False):
-		if element.p.span:
-			name = element.p.span.get_text()
-			rate = element.p.span.find_next_sibling("span").get_text()
-			info_link = element.get('href')
-			cover_link = element.img.get('src')
-
-			createVar = locals()
-			createVar['info'+'2'] = Movie(name, rate, location, category, info_link, cover_link)
-			print(info2.rate)
-			# num_movies += 1
-	return
+# def getMoviesDetail(category, location):
+# 	url = getMovieUrl(category, location)
+# 	html = expanddouban.getHtml(url, True)
+# 	soup = bs4.BeautifulSoup(html, "html.parser")
+# 	content_div = soup.find("div",class_="list-wp")
+# 	for element in content_div.find_all("a", recursive=False):
+# 		if element.p.span:
+# 			name = element.p.span.get_text()
+# 			rate = element.p.span.find_next_sibling("span").get_text()
+# 			info_link = element.get('href')
+# 			cover_link = element.img.get('src')
+#
+# 			createVar = locals()
+# 			createVar['info'+'2'] = Movie(name, rate, location, category, info_link, cover_link)
+# 			print(info2.rate)
+# 			# num_movies += 1
+# 	return
 
 
 
@@ -125,7 +125,33 @@ def getMoviesDetail(category, location):
 
 
 def myFavoriteMovies(categories):
+	num_movies = 0
+	name_movies = []
 	for category in categories:
-		for loaction in getLocations(category):
+		for location in getLocations(category):
 			url = getMovieUrl(category,location)
-print(getMoviesDetail("剧情","美国"))
+			html = expanddouban.getHtml(url, True)
+			soup = bs4.BeautifulSoup(html, "html.parser")
+			content_div = soup.find("div",class_="list-wp")
+			for element in content_div.find_all("a", recursive=False):
+				if element.p.span:
+					name = element.p.span.get_text()
+					rate = element.p.span.find_next_sibling("span").get_text()
+					info_link = element.get('href')
+					cover_link = element.img.get('src')
+					if name not in name_movies:
+						name_movies.append(name)
+						createVar = locals()
+						createVar['movie'+str(num_movies)] = Movie(name, rate, location, category, info_link, cover_link)
+						# print(createVar['movie'+'num_movies'].name)
+						num_movies += 1
+	with open('movies.csv', 'w', newline='') as csvfile:
+		spamwriter = csv.writer(csvfile, dialect='excel')
+		# spamwriter = csv.writer(csvfile, delimiter=' ',quotechar=',', quoting=csv.QUOTE_MINIMAL)
+		for num in range(len(name_movies)):
+			spamwriter.writerow([createVar['movie'+str(num)].name, createVar['movie'+str(num)].rate, createVar['movie'+str(num)].location, createVar['movie'+str(num)].category, createVar['movie'+str(num)].info_link, createVar['movie'+str(num)].cover_link])
+			print(num)
+
+
+# print(getMoviesDetail("剧情","美国"))
+print(myFavoriteMovies(my_favorite_categories))
