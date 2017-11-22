@@ -184,16 +184,3 @@ for n in range(len(results_for_output)):
 	f.write('\n')
 
 f.close()
-
-
-
-
-
-
-
-
-
-
-
-
-# print(most_popular_locations(movies))
